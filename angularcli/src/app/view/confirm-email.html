@@ -1,0 +1,6 @@
+<h4>Email Confirmation Page</h4>
+<div *ngIf="confirmResponse">
+    <p>You may now log in with your newly registered account.</p>
+    <a routerLink="/page-login" routerLinkActive="active">Log in</a>
+    <p class="text-success">{{confirmResponse}}</p>
+</div>

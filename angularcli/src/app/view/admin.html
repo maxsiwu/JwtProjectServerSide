@@ -1,0 +1,43 @@
+<h4>Get All Users</h4>
+<button (click)="getAllUsers()" class="btn btn-primary" [disabled]="sendingRequest">Get Users</button>
+<div *ngIf="allUsersJSON">
+    <h4>All Users Response:</h4>
+    <table class="table">
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Email Confirmed</th>
+            <th>Roles</th>
+        </tr>
+        <tr *ngFor="let oneUser of allUsersJSON">
+            <td>{{oneUser.userName}}</td>
+            <td>{{oneUser.fullName}}</td>
+            <td>{{oneUser.email}}</td>
+            <td>{{oneUser.emailConfirmed}}</td>
+            <td>{{oneUser.roles}}</td>
+        </tr>
+    </table>
+</div>
+
+<h4>Search User by User Name</h4>
+<input type="text" [(ngModel)]="userNameSearch" required><br/><br>
+<button (click)="getUserByName(userNameSearch)" class="btn btn-primary" [disabled]="sendingRequest">Get User by Name</button>
+<br><br>
+<table class="table" *ngIf="oneUser">
+    <tr>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Email Confirmed</th>
+        <th>Roles</th>
+    </tr>
+    <tr>
+        <td>Username: {{oneUser.userName}}</td>
+        <td>Full Name: {{oneUser.fullName}}</td>
+        <td>Roles: {{oneUser.roles}}</td>
+        <td>Email: {{oneUser.email}}</td>
+        <td>Email Confirmed: {{oneUser.emailConfirmed}}</td>
+    </tr>
+</table>
+<p *ngIf="error" class="text-danger">{{error}}</p>

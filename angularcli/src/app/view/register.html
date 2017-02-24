@@ -1,0 +1,48 @@
+<h4>Register Now</h4>
+<form>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Email</label>
+        <div class="col-10">
+            <input type="email" name="email" [(ngModel)]="userModel.Email" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">User Name</label>
+        <div class="col-10">
+            <input type="text" name="userName" [(ngModel)]="userModel.UserName" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-10">
+            <input type="password" name="password" [(ngModel)]="userModel.Password" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password Confirmation</label>
+        <div class="col-10">
+            <input type="password" name="confirmedPassword" [(ngModel)]="userModel.ConfirmPassword" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">First Name</label>
+        <div class="col-10">
+            <input type="text" name="firstName" [(ngModel)]="userModel.FirstName" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Last Name</label>
+        <div class="col-10">
+            <input type="text" name="lastName" [(ngModel)]="userModel.LastName" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <button (click)="registerUser()" class="btn btn-primary" [disabled]="sendingRequest">Register</button>
+        <p class="text-success" *ngIf="registerResponse">token: {{token}}<br/>{{bulkUserData}}</p>
+        <div *ngIf="allErrors">
+            <ul class="text-danger" *ngFor="let error of allErrors">
+                <li *ngIf="error != ''">{{error}}</li>
+            </ul>
+        </div>
+    </div>
+</form>
