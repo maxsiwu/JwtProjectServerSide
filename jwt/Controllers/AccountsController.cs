@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace jwt.Controllers {
@@ -79,10 +80,11 @@ namespace jwt.Controllers {
 	        }
 
             string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            string encodedCode = code.Replace("+", "%2B").Replace("/", "%2F");
+            //string encodedCode = code.Replace("+", "%2B").Replace("/", "%2F");
+            string encodedCode = HttpContext.Current.Server.UrlEncode(code);
             //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute",
             //                  new { userId = user.Id, code = code }));
-            var callbackUrl = "http://localhost:3000/page-confirm-email?max=true&userid="+ user.Id +"&code=" + encodedCode;
+            var callbackUrl = "http://localhost:3000/#/page-confirm-email?max=true&userid="+ user.Id +"&code=" + encodedCode;
             
             await this.AppUserManager.SendEmailAsync(user.Id,"Confirm your account", 
             "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
@@ -149,7 +151,8 @@ namespace jwt.Controllers {
         //[Route("ConfirmEmail", Name = "ConfirmEmailRoute")]
         [Route("confirmemail")]
         public async Task<IHttpActionResult> ConfirmEmail(ConfirmEmailModel model) {
-            string decodedCode = model.Token.Replace("%2B", "+").Replace("%2F", "/");
+            //string decodedCode = model.Token.Replace("%2B", "+").Replace("%2F", "/");
+            string decodedCode = HttpContext.Current.Server.UrlDecode(model.Token);
             if (string.IsNullOrWhiteSpace(model.UserID) || string.IsNullOrWhiteSpace(decodedCode)) {
                 ModelState.AddModelError("", "User Id and Code are required");
                 return BadRequest(ModelState);
